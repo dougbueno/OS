@@ -20,7 +20,7 @@ import com.douglas.os.domain.entity.Cliente;
 import com.douglas.os.domain.service.ClienteService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin("*")
 @RequestMapping(value = "/api/v1/cliente")
 public class ClienteController {
 

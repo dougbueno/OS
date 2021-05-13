@@ -22,7 +22,7 @@ import com.douglas.os.domain.dto.OSDTO;
 import com.douglas.os.domain.service.OSService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin("*")
 @RequestMapping(value = "/api/v1/os")
 public class OSController {
 
