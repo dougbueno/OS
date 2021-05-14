@@ -21,7 +21,7 @@ import com.douglas.os.domain.service.ClienteService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(value = "/api/v1/cliente")
+@RequestMapping(value = "/cliente")
 public class ClienteController {
 
 	@Autowired
