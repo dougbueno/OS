@@ -48,6 +48,7 @@ public class TecnicoService {
 		return null;
 	}
 
+
 	public Tecnico atualizarTecnico(Integer id, @Valid Tecnico obj) {
 		Tecnico oldObj = buscaPorId(id);
 		if (procuraPorCPF(obj) != null && procuraPorCPF(obj).getId() != id) {

@@ -68,9 +68,8 @@ public class TecnicoController {
 
 	// Deleta um técnico através do ID
 	@DeleteMapping(value = "/{id}")
-	public String apagarTecnico(@PathVariable Integer id) {
+	public void apagarTecnico(@PathVariable Integer id) {
 		tecnicoService.apagarTecnico(id);
-		return "Tecnico deletado Com Sucesso"; 
 	}
 
 }
