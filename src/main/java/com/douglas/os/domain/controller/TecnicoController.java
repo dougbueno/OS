@@ -22,7 +22,7 @@ import com.douglas.os.domain.entity.Tecnico;
 import com.douglas.os.domain.service.TecnicoService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "/tecnico")
 public class TecnicoController {
 
