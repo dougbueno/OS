@@ -52,10 +52,10 @@ public class TecnicoController {
 	}
 
 	// Gera Relatório com os Técnicos
-	@GetMapping("/report/{format}")
-	public String relatorioTodosTecnicos(@PathVariable Integer format) throws JRException, IOException {
+	@GetMapping("/report")
+	public String relatorioTodosTecnicos() throws JRException, IOException {
 		
-		return reportService.exportReport(format);
+		return reportService.exportReport();
 	}
 
 	// Busca todos técnicos

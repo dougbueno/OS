@@ -27,7 +27,7 @@ public class ReportService {
 	@Autowired
 	private TecnicoRepository repository;
 
-	public String exportReport(Integer reportFormat) throws JRException, IOException {
+	public String exportReport() throws JRException, IOException {
 
 		List<Tecnico> tecnico = repository.findAll();
 		// load file and compile it
@@ -37,11 +37,7 @@ public class ReportService {
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("createBy", "Douglas Bueno");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-		if (reportFormat.equals(1)) {
-			JasperPrintManager.printReport(jasperPrint, false); 
-			return "Relatório Gerado com sucesso.";
-		} else {
-			return "Relatório não gerado";
-		}
+		JasperPrintManager.printReport(jasperPrint, false); 
+		return "Relatório Gerado com sucesso.";
 	}
 }
