@@ -1,5 +1,6 @@
 package com.douglas.os.domain.controller;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -19,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.douglas.os.domain.entity.Tecnico;
+import com.douglas.os.domain.service.ReportService;
 import com.douglas.os.domain.service.TecnicoService;
+
+import net.sf.jasperreports.engine.JRException;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -28,6 +32,9 @@ public class TecnicoController {
 
 	@Autowired
 	private TecnicoService tecnicoService;
+
+	@Autowired
+	private ReportService reportService;
 
 	// Verifica se esta ativo o server
 	@GetMapping("/health")
@@ -42,6 +49,13 @@ public class TecnicoController {
 	public ResponseEntity<Tecnico> buscaTecnicos(@PathVariable Integer id) {
 		Tecnico obj = tecnicoService.buscaPorId(id);
 		return ResponseEntity.ok().body(obj);
+	}
+
+	// Gera Relatório com os Técnicos
+	@GetMapping("/report/{format}")
+	public String relatorioTodosTecnicos(@PathVariable Integer format) throws JRException, IOException {
+		
+		return reportService.exportReport(format);
 	}
 
 	// Busca todos técnicos
