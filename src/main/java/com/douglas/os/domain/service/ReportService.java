@@ -23,21 +23,26 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Service
 public class ReportService {
-
+	
 	@Autowired
 	private TecnicoRepository repository;
 
 	public String exportReport() throws JRException, IOException {
-
-		List<Tecnico> tecnico = repository.findAll();
-		// load file and compile it
-		File file = ResourceUtils.getFile("classpath:FormularioTecnicos.jrxml");
-		JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(tecnico);
-		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("createBy", "Douglas Bueno");
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-		JasperPrintManager.printReport(jasperPrint, false); 
-		return "Relatório Gerado com sucesso.";
+		try {
+			List<Tecnico> tecnico = repository.findAll();
+			// load file and compile it
+			File file = ResourceUtils.getFile("classpath:reports\\FormularioTecnicos.jrxml");
+			JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(tecnico);
+			Map<String, Object> parameters = new HashMap<>();
+			parameters.put("createBy", "Douglas Bueno");
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+			JasperPrintManager.printReport(jasperPrint, false);
+			return "Gerou";
+		} catch (JRException e) {
+			return e.getMessage();
+		} catch (IOException e) {
+			return e.getMessage();
+		}
 	}
 }

@@ -37,7 +37,7 @@ public class TecnicoController {
 	private ReportService reportService;
 
 	// Verifica se esta ativo o server
-	@GetMapping("/health")
+	@GetMapping(value = "/health")
 	public String health() {
 		LocalDateTime agora = LocalDateTime.now();
 		DateTimeFormatter formatado = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -52,10 +52,9 @@ public class TecnicoController {
 	}
 
 	// Gera Relatório com os Técnicos
-	@GetMapping("/report")
-	public String relatorioTodosTecnicos() throws JRException, IOException {
-		
-		return reportService.exportReport();
+	@GetMapping(value = "/report")
+	public void relatorioTodosTecnicos()throws JRException, IOException{
+		reportService.exportReport();
 	}
 
 	// Busca todos técnicos
