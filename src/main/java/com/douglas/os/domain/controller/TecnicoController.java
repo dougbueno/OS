@@ -1,6 +1,5 @@
 package com.douglas.os.domain.controller;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -53,7 +52,7 @@ public class TecnicoController {
 
 	// Gera Relatório com os Técnicos
 	@GetMapping(value = "/report")
-	public String relatorioTodosTecnicos()throws JRException, IOException{
+	public String relatorioTodosTecnicos()throws JRException{
 		return reportService.exportReport();
 	}
 
