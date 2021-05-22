@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.douglas</groupId>
 	<artifactId>douglas</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>douglas</name>
 	<description>Demo project de Ordem de Serviço</description>
 	<properties>
@@ -47,7 +47,7 @@
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
-			<version>6.4.0</version>
+			<version>6.17.0</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy -->

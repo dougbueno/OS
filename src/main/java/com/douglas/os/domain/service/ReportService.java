@@ -37,7 +37,6 @@ public class ReportService {
 			InputStream inputStream
 			  = getClass().getResourceAsStream("/FormularioTecnicos.jrxml");
 			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-			JRSaver.saveObject(jasperReport, "FormularioTecnicos.jasper");
 			
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(tecnico);
 			Map<String, Object> parameters = new HashMap<>();
