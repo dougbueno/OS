@@ -31,7 +31,7 @@ public class ReportService {
 		try {
 			List<Tecnico> tecnico = repository.findAll();
 			// load file and compile it
-			File file = ResourceUtils.getFile("classpath:reports\\FormularioTecnicos.jrxml");
+			File file = ResourceUtils.getFile("classpath:FormularioTecnicos.jrxml");
 			JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(tecnico);
 			Map<String, Object> parameters = new HashMap<>();
