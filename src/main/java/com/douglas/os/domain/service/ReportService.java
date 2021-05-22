@@ -1,14 +1,13 @@
 package com.douglas.os.domain.service;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
 import com.douglas.os.domain.entity.Tecnico;
 import com.douglas.os.domain.repository.TecnicoRepository;
@@ -31,8 +30,9 @@ public class ReportService {
 		try {
 			List<Tecnico> tecnico = repository.findAll();
 			// load file and compile it
-			File file = ResourceUtils.getFile("classpath:FormularioTecnicos.jrxml");
-			JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+			InputStream inputStream = getClass().getResourceAsStream( "/FormularioTecnicos.jrxml" );
+//			InputStream file = new FileInputStream(new File("FormularioTecnicos.jrxml"));
+			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(tecnico);
 			Map<String, Object> parameters = new HashMap<>();
 			parameters.put("createBy", "Douglas Bueno");
@@ -41,8 +41,8 @@ public class ReportService {
 			return "Gerou";
 		} catch (JRException e) {
 			return e.getMessage();
-		} catch (IOException e) {
-			return e.getMessage();
+//		} catch (IOException e) {
+//			return e.getMessage();
 		}
 	}
 }
