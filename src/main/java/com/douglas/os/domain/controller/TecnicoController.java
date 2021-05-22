@@ -1,5 +1,6 @@
 package com.douglas.os.domain.controller;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -52,7 +53,7 @@ public class TecnicoController {
 
 	// Gera Relatório com os Técnicos
 	@GetMapping(value = "/report")
-	public String relatorioTodosTecnicos()throws JRException{
+	public String relatorioTodosTecnicos() throws FileNotFoundException, JRException {
 		return reportService.exportReport();
 	}
 
