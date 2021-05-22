@@ -53,8 +53,8 @@ public class TecnicoController {
 
 	// Gera Relatório com os Técnicos
 	@GetMapping(value = "/report")
-	public void relatorioTodosTecnicos()throws JRException, IOException{
-		reportService.exportReport();
+	public String relatorioTodosTecnicos()throws JRException, IOException{
+		return reportService.exportReport();
 	}
 
 	// Busca todos técnicos
