@@ -50,7 +50,7 @@ public class GenerateClientePdfReport {
 			hcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
-			
+
 			hcell = new PdfPCell(new Phrase("Celular", headFont));
 			hcell.setBackgroundColor(BaseColor.LIGHT_GRAY);
 			hcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -75,7 +75,7 @@ public class GenerateClientePdfReport {
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase(String.valueOf(cliente.getTelefone())));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -84,11 +84,7 @@ public class GenerateClientePdfReport {
 
 			PdfWriter.getInstance(document, out);
 			document.open();
-			document.add(new Phrase
-			("Relatório de Clientes",
-					FontFactory.getFont(
-					FontFactory.HELVETICA_BOLD,
-					20				)));
+			document.add(new Phrase("Relatório de Clientes", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20)));
 			document.add(table);
 			document.close();
 

@@ -47,7 +47,7 @@ public class ClienteController {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	// Gera Relatório com os Técnicos
+	// Gera Relatório com os Clientes
 		@GetMapping(value = "/pdfreport")
 		public ResponseEntity<InputStreamResource> tecnicosReport() throws IOException {
 

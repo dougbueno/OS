@@ -1,5 +1,7 @@
 package com.douglas.os.domain.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,6 +9,9 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.douglas.os.domain.dto.OSDTO;
+import com.douglas.os.domain.entity.OS;
 import com.douglas.os.domain.service.OSService;
+import com.douglas.os.domain.utilitys.GenerateOSPdfReport;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -43,6 +50,21 @@ public class OSController {
 		return ResponseEntity.ok().body(list);
 	}
 
+	// Gera Relatório com de Ordem de Serviços
+	@GetMapping(value = "/pdfreport")
+	public ResponseEntity<InputStreamResource> osReport() throws IOException {
+
+		List<OS> os = service.buscaTodasOS();
+
+		ByteArrayInputStream bis = GenerateOSPdfReport.osReport(os);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "inline; filename=OSCliente.pdf");
+
+		return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
+				.body(new InputStreamResource(bis));
+	}
+
 	// Criar uma Ordem de Serviço
 	@PostMapping
 	public ResponseEntity<OSDTO> create(@Valid @RequestBody OSDTO obj) {
@@ -50,7 +72,7 @@ public class OSController {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
+
 	// Atualiza uma Ordem de Serviço
 	@PutMapping
 	public ResponseEntity<OSDTO> update(@Valid @RequestBody OSDTO obj) {
