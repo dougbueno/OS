@@ -1,10 +1,15 @@
 package com.douglas.os.domain.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.douglas.os.domain.entity.Cliente;
 import com.douglas.os.domain.service.ClienteService;
+import com.douglas.os.domain.utilitys.GenerateClientePdfReport;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -40,6 +46,21 @@ public class ClienteController {
 		List<Cliente> obj = clienteService.buscaTodosClientes();
 		return ResponseEntity.ok().body(obj);
 	}
+	
+	// Gera Relatório com os Técnicos
+		@GetMapping(value = "/pdfreport")
+		public ResponseEntity<InputStreamResource> tecnicosReport() throws IOException {
+
+			List<Cliente> cliente = clienteService.buscaTodosClientes();
+
+			ByteArrayInputStream bis = GenerateClientePdfReport.clienteReport(cliente);
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Disposition", "inline; filename=ListaCliente.pdf");
+
+			return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
+					.body(new InputStreamResource(bis));
+		}
 
 	// Criar um Cliente
 	@PostMapping

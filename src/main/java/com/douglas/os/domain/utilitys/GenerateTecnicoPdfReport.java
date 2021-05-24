@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.douglas.os.domain.entity.Tecnico;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -17,7 +18,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class GeneratePdfReport {
+public class GenerateTecnicoPdfReport {
 	
 	public static ByteArrayInputStream tecnicosReport(List<Tecnico> tecnicos) {
 
@@ -27,25 +28,33 @@ public class GeneratePdfReport {
 		try {
 
 			PdfPTable table = new PdfPTable(4);
-			table.setWidthPercentage(60);
-			table.setWidths(new int[] { 1, 3, 3, 3 });
+			table.setWidthPercentage(100);
+			table.setWidths(new int[] { 1, 5, 2, 2 });
 
 			Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 
 			PdfPCell hcell;
 			hcell = new PdfPCell(new Phrase("Id", headFont));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			hcell.setBackgroundColor(BaseColor.LIGHT_GRAY);
 			table.addCell(hcell);
 
 			hcell = new PdfPCell(new Phrase("Nome", headFont));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			hcell.setBackgroundColor(BaseColor.LIGHT_GRAY);
 			table.addCell(hcell);
 
 			hcell = new PdfPCell(new Phrase("CPF", headFont));
+			hcell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			hcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
 			
 			hcell = new PdfPCell(new Phrase("Celular", headFont));
+			hcell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			hcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
 
@@ -59,7 +68,6 @@ public class GeneratePdfReport {
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase(tecnico.getNome()));
-				cell.setPaddingLeft(5);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(cell);
@@ -67,25 +75,27 @@ public class GeneratePdfReport {
 				cell = new PdfPCell(new Phrase(String.valueOf(tecnico.getCpf())));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				cell.setPaddingRight(5);
 				table.addCell(cell);
 				
 				cell = new PdfPCell(new Phrase(String.valueOf(tecnico.getTelefone())));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				cell.setPaddingRight(5);
 				table.addCell(cell);
 			}
 
 			PdfWriter.getInstance(document, out);
 			document.open();
+			document.add(new Phrase
+			("Relatório de Técnicos",
+					FontFactory.getFont(
+					FontFactory.HELVETICA_BOLD,
+					20				)));
 			document.add(table);
-
 			document.close();
 
 		} catch (DocumentException ex) {
 
-			Logger.getLogger(GeneratePdfReport.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(GenerateTecnicoPdfReport.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
 		return new ByteArrayInputStream(out.toByteArray());

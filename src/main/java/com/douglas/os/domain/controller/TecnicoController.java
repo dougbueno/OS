@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.douglas.os.domain.entity.Tecnico;
 import com.douglas.os.domain.service.TecnicoService;
-import com.douglas.os.domain.utilitys.GeneratePdfReport;
+import com.douglas.os.domain.utilitys.GenerateTecnicoPdfReport;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -56,7 +56,7 @@ public class TecnicoController {
 
 		List<Tecnico> tecnico = tecnicoService.buscaTodosTecnicos();
 
-		ByteArrayInputStream bis = GeneratePdfReport.tecnicosReport(tecnico);
+		ByteArrayInputStream bis = GenerateTecnicoPdfReport.tecnicosReport(tecnico);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Disposition", "inline; filename=ListaTecnicos.pdf");
