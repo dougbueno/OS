@@ -131,7 +131,7 @@ public class GenerateOSPdfReport {
 			PdfWriter.getInstance(document, out);
 			document.open();
 			document.add(new Phrase
-			("Relatório de Técnicos",
+			("Relatório de Ordens de Serviço",
 					FontFactory.getFont(
 					FontFactory.HELVETICA_BOLD,
 					20				)));
