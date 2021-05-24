@@ -1,6 +1,7 @@
 package com.douglas.os.domain.controller;
 
-import java.io.FileNotFoundException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -8,6 +9,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,10 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.douglas.os.domain.entity.Tecnico;
-import com.douglas.os.domain.service.ReportService;
 import com.douglas.os.domain.service.TecnicoService;
-
-import net.sf.jasperreports.engine.JRException;
+import com.douglas.os.domain.utilitys.GeneratePdfReport;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -32,9 +34,6 @@ public class TecnicoController {
 
 	@Autowired
 	private TecnicoService tecnicoService;
-
-	@Autowired
-	private ReportService reportService;
 
 	// Verifica se esta ativo o server
 	@GetMapping(value = "/health")
@@ -52,9 +51,18 @@ public class TecnicoController {
 	}
 
 	// Gera Relatório com os Técnicos
-	@GetMapping(value = "/report")
-	public String relatorioTodosTecnicos() throws FileNotFoundException, JRException {
-		return reportService.exportReport();
+	@GetMapping(value = "/pdfreport")
+	public ResponseEntity<InputStreamResource> tecnicosReport() throws IOException {
+
+		List<Tecnico> tecnico = tecnicoService.buscaTodosTecnicos();
+
+		ByteArrayInputStream bis = GeneratePdfReport.tecnicosReport(tecnico);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "inline; filename=ListaTecnicos.pdf");
+
+		return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
+				.body(new InputStreamResource(bis));
 	}
 
 	// Busca todos técnicos
