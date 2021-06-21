@@ -39,6 +39,10 @@ public class OSService {
 	public List<OS> buscaTodasOS() {
 		return osRepository.findAll();
 	}
+	
+	public List<String> buscaValor() {
+		return osRepository.getValor();
+	}
 
 	public OS salvarOS(@Valid OSDTO obj) {
 		return fromDTO(obj);
@@ -62,6 +66,7 @@ public class OSService {
 		
 		newObj.setTecnico(tec);
 		newObj.setCliente(cli);
+		newObj.setValor(obj.getValor());
 		
 		if(newObj.getStatus().getCod().equals(2)) {
 			newObj.setDataFechamento(LocalDateTime.now());

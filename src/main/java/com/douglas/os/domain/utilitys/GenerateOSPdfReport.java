@@ -27,11 +27,21 @@ public class GenerateOSPdfReport {
 
 		try {
 
-			PdfPTable table = new PdfPTable(8);
+			PdfPTable table = new PdfPTable(9);
 			table.setWidthPercentage(100);
-			table.setWidths(new int[] { 1, 2, 2, 2, 2, 2, 2,2 });
+			table.setWidths(new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2 });
 
-			Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+			Font cabecalho = FontFactory.getFont(FontFactory.HELVETICA_BOLD,20,BaseColor.WHITE);
+			Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD,12);
+			
+			PdfPCell head ;
+			head = new PdfPCell(new Phrase("Relatório de Ordens de Serviço", cabecalho));
+			head.setColspan(9);
+			head.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			head.setHorizontalAlignment(Element.ALIGN_CENTER);
+			head.setBackgroundColor(BaseColor.BLACK);
+			head.setPadding(10);
+			table.addCell(head);
 
 			PdfPCell hcell;
 			hcell = new PdfPCell(new Phrase("Id", headFont));
@@ -82,6 +92,12 @@ public class GenerateOSPdfReport {
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
 			
+			hcell = new PdfPCell(new Phrase("Valor", headFont));
+			hcell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			hcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(hcell);
+			
 			for (OS osDTO : osDTOS) {
 
 				PdfPCell cell;
@@ -122,19 +138,21 @@ public class GenerateOSPdfReport {
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(cell);
 				
-				cell = new PdfPCell(new Phrase(String.valueOf(osDTO.getObservacoes())));
+				cell = new PdfPCell(new Phrase(osDTO.getObservacoes()));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase(osDTO.getValor()));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(cell);
 			}
 
+		
+			
 			PdfWriter.getInstance(document, out);
 			document.open();
-			document.add(new Phrase
-			("Relatório de Ordens de Serviço",
-					FontFactory.getFont(
-					FontFactory.HELVETICA_BOLD,
-					20				)));
 			document.add(table);
 			document.close();
 

@@ -30,9 +30,19 @@ public class GenerateClientePdfReport {
 			table.setWidthPercentage(100);
 			table.setWidths(new int[] { 1, 5, 2, 2 });
 
-			Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-
+			Font cabecalho = FontFactory.getFont(FontFactory.HELVETICA_BOLD,20,BaseColor.WHITE);
+			Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD,12);
+			
 			PdfPCell hcell;
+			hcell = new PdfPCell(new Phrase("Relatório de Clientes", cabecalho));
+			hcell.setColspan(9);
+			hcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.BLACK);
+			hcell.setPadding(10);
+			table.addCell(hcell);
+
+			
 			hcell = new PdfPCell(new Phrase("Id", headFont));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -84,7 +94,6 @@ public class GenerateClientePdfReport {
 
 			PdfWriter.getInstance(document, out);
 			document.open();
-			document.add(new Phrase("Relatório de Clientes", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20)));
 			document.add(table);
 			document.close();
 

@@ -3,6 +3,7 @@ package com.douglas.os.domain.controller;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -78,5 +79,21 @@ public class OSController {
 	public ResponseEntity<OSDTO> update(@Valid @RequestBody OSDTO obj) {
 		obj = new OSDTO(service.atualizarOS(obj));
 		return ResponseEntity.ok().body(obj);
+	}
+
+	// Soma Valor Total das Ordens de Serviço
+	@GetMapping(value = "/caixa")
+	public ResponseEntity<Double> caixa() {
+		List<String> list = service.buscaValor();
+		List<Double> newList = new ArrayList<Double>();
+		for (int i = 0; i < list.size(); i++) {
+			String converter = list.get(i);
+			Double passagem = Double.parseDouble(converter);
+			newList.add(passagem);
+		}
+		Double sum = 0.0;
+		for (Double k : newList)
+			sum = sum + k;
+		return ResponseEntity.ok().body(sum);
 	}
 }

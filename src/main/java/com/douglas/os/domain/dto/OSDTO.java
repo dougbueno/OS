@@ -29,6 +29,8 @@ public class OSDTO implements Serializable {
 	private Integer status;
 	private Integer tecnico;
 	private Integer cliente;
+	@NotEmpty(message = "O campo Valor é requerido")
+	private String valor;
 
 	public OSDTO() {
 		super();
@@ -45,6 +47,7 @@ public class OSDTO implements Serializable {
 		this.status = obj.getStatus().getCod();
 		this.tecnico = obj.getTecnico().getId();
 		this.cliente = obj.getCliente().getId();
+		this.valor = obj.getValor();
 	}
 
 	public Integer getId() {
@@ -109,6 +112,14 @@ public class OSDTO implements Serializable {
 
 	public void setCliente(Integer cliente) {
 		this.cliente = cliente;
+	}
+
+	public String getValor() {
+		return valor;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
 	}
 
 }

@@ -40,6 +40,7 @@ public class OS implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
+	private String valor;
 
 	public OS() {
 		super();
@@ -49,7 +50,7 @@ public class OS implements Serializable {
 	}
 
 	public OS(Integer id, Prioridade prioridade, String observacoes, 
-			Status status, Tecnico tecnico, Cliente cliente) {
+			Status status, Tecnico tecnico, Cliente cliente, String valor) {
 		super();
 		this.id = id;
 		this.setDataAbertura(LocalDateTime.now());
@@ -58,6 +59,7 @@ public class OS implements Serializable {
 		this.status = (status == null) ? 0 : status.getCod();
 		this.tecnico = tecnico;
 		this.cliente = cliente;
+		this.valor = valor;
 	}
 
 	public Integer getId() {
@@ -122,6 +124,14 @@ public class OS implements Serializable {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}	
+
+	public String getValor() {
+		return valor;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
 	}
 
 	@Override
